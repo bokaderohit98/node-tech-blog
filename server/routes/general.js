@@ -27,24 +27,24 @@ articles.push({
 
 router.get('/', (req, res) => {
   //fetch recent articles from database
-  res.render('index', {
+  res.render('general/index', {
     mainArticles: articles
   });
 });
 
 router.get('/articles', (req, res) => {
   //fetch all articles from data base
-  res.render('articles', {
+  res.render('general/articles', {
     articles
   });
 });
 
 router.get('/about', (req, res) => {
-  res.render('about');
+  res.render('general/about');
 });
 
 router.get('/contact', (req, res) => {
-  res.render('contact');
+  res.render('general/contact');
 });
 
 router.post('/contact', (req, res) => {
@@ -55,7 +55,7 @@ router.post('/contact', (req, res) => {
 router.get('/article/:id', (req, res) => {
   //fetch one article from database according to the id
   id = req.params.id;
-  res.render('article', {
+  res.render('general/article', {
     article
   })
 });
