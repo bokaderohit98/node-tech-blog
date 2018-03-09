@@ -26,11 +26,13 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-//Home route
-app.get('/', (req, res) => {
-  console.log('home');
-  res.render('index');
-});
+//load routes
+const general = require('./routes/general');
+const admin = require('./routes/admin');
+
+//setting routes
+app.use('/', general);
+app.use('/admin', admin);
 
 //setting port
 const port = process.env.PORT;

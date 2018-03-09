@@ -227,3 +227,7 @@ footer .mdl-logo a {
 .footer-container {
   margin: 0 auto;
 }
+
+.clickable {
+  cursor: pointer;
+}
