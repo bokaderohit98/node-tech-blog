@@ -1,0 +1,30 @@
+<div class="mdl-grid site-max-width">
+  <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp page-content">
+    <div class="mdl-card__title">
+      <h1 class="mdl-card__title-text">{{article.title}}</h1>
+    </div>
+    <div class="mdl-card__supporting-text">
+      {{article.date}}
+    </div>
+    <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp page-content">
+      <div class="mdl-card__media">
+        <img class="article-image" src="{{article.img}}" border="0">
+      </div>
+    </div>
+    <div class="mdl-card__supporting-text" style="font-size: 1em">{{article.article}}</div>
+  </div>
+  <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp page-content">
+    {{_facebookComments}}
+  </div>
+</div>
+
+{{#if articles}}
+  <div class="mdl-grid site-max-width">
+    <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp page-content">
+      <div class="mdl-card__title">
+        <h1 class="mdl-card__title-text">More To Read...</h1>
+      </div>
+      {{> _articleCard}}
+    </div>
+  </div>
+{{/if}}

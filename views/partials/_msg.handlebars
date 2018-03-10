@@ -1,12 +1,14 @@
 {{#if success_msg}}
-  <div class="alert alert-success alert-dismissable">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {{success_msg}}
-  </div>
+  <span class="mdl-chip mdl-chip--deletable" style="background: #8BC34A">
+  <span class="mdl-chip__text">{{success_msg}}</span>
+  <button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+  </span>
 {{/if}}
 
 
 {{#if error_msg}}
-  <div class="alert alert-danger alert-dismissable">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {{error_msg}}
-  </div>
+  <span class="mdl-chip mdl-chip--deletable" style="background: #F44336; color: #ffffff">
+  <span class="mdl-chip__text">{{error_msg}}</span>
+  <button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+  </span>
 {{/if}}

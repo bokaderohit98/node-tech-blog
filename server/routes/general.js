@@ -1,42 +1,37 @@
 const express = require('express');
 const router = express.Router();
-
-//for testing purpose only
-var articles = [];
-articles.push({
-  title: 'Who won ipl',
-  description: 'i dont have any idea about this thing but i will still speak',
-});
-articles.push({
-  title: 'Who won cpl',
-  description: 'i dont have any idea about this thing but i will still speak',
-});
-articles.push({
-  title: 'Who won world cup 220',
-  description: 'i dont have any idea about this thing but i will still speak',
-});
-articles.push({
-  title: 'Who won nidahas trophy',
-  description: 'i dont have any idea about this thing but i will still speak',
-});
-articles.push({
-  title: 'Who won test match',
-  description: 'i dont have any idea about this thing but i will still speak',
-});
-
+const Article = require('../models/Article');
+const Mail = require('../models/Mail');
 
 router.get('/', (req, res) => {
-  //fetch recent articles from database
-  res.render('general/index', {
-    mainArticles: articles
-  });
+  Article.find({})
+    .limit(5)
+    .sort({
+      date: -1
+    })
+    .then((articles) => {
+      res.render('general/index', {
+        mainArticles: articles
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 router.get('/articles', (req, res) => {
-  //fetch all articles from data base
-  res.render('general/articles', {
-    articles
-  });
+  Article.find({})
+    .sort({
+      date: -1
+    })
+    .then((articles) => {
+      res.render('general/articles', {
+        articles
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 router.get('/about', (req, res) => {
@@ -48,16 +43,102 @@ router.get('/contact', (req, res) => {
 });
 
 router.post('/contact', (req, res) => {
-  //add data to the database
-  res.redirect('/');
+  var errors = [];
+  var email = req.body.email;
+  var name = req.body.name;
+  var message = req.body.message;
+
+  if (email.length === 0) {
+    errors.push({
+      text: 'Email Required'
+    });
+  }
+
+  if (name.length === 0) {
+    errors.push({
+      text: 'Name Required'
+    });
+  }
+  if (message.length === 0) {
+    errors.push({
+      text: 'Message Required'
+    });
+  }
+
+  if (errors.length === 0) {
+    new Mail({
+      email,
+      name,
+      message
+    }).save((err) => {
+      if (err) {
+        console.log(err);
+        return;
+      } else {
+        req.flash('success_msg', 'Thankyou for contacting us. We will get to you shortly.');
+        res.redirect('/');
+      }
+    });
+  } else {
+    console.log(errors);
+    res.render('general/contact', {
+      errors,
+      email,
+      name,
+      message
+    });
+  }
 });
 
-router.get('/article/:id', (req, res) => {
-  //fetch one article from database according to the id
-  id = req.params.id;
-  res.render('general/article', {
-    article
-  })
+router.get('/articles/:id', (req, res) => {
+  const host = process.env.HOST;
+  const id = req.params.id;
+  var articles = [];
+  Article.findById(id).then((article) => {
+    Article.find({
+        date: {
+          $lt: article.date
+        }
+      })
+      .sort({
+        date: -1
+      })
+      .limit(2)
+      .then((lowers) => {
+        lowers.forEach((lower) => {
+          articles.push(lower);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    Article.find({
+        date: {
+          $gt: article.date
+        }
+      })
+      .sort({
+        date: 1
+      })
+      .limit(2)
+      .then((uppers) => {
+        uppers.forEach((upper) => {
+          articles.push(upper);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    res.render('general/articlePage', {
+      article,
+      articles,
+      host
+    });
+  }).catch((err) => {
+    console.log(err);
+    return;
+  });
 });
 
 module.exports = router;

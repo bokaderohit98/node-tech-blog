@@ -104,7 +104,7 @@ img {
 .welcome-card > .mdl-card__title {
   color: #fff;
   height: 290px;
-  background: url("../img/cover.jpg") center/cover;
+  background: center/cover;
 }
 
 .event-card {
@@ -182,14 +182,6 @@ img.article-image {
 .demo-card-image.mdl-card {
   width: 192px;
   height: 192px;
-}
-
-.person1 {
-  background: url("../img/person1.jpg") center/cover;
-}
-
-.person2 {
-  background: url("../img/person2.jpg") center/cover;
 }
 
 .demo-card-image > .mdl-card__actions {

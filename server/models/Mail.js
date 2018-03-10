@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const MailSchema = new Schema ({
   name: {
@@ -10,7 +10,7 @@ const MailSchema = new Schema ({
     type: String,
     required: true
   },
-  note: {
+  message: {
     type: String,
     required: true
   },
