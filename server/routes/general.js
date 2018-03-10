@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Article = require('../models/Article');
 const Mail = require('../models/Mail');
+const Subscriber = require('../models/Subscriber');
 
 router.get('/', (req, res) => {
   Article.find({})
@@ -139,6 +140,49 @@ router.get('/articles/:id', (req, res) => {
     console.log(err);
     return;
   });
+});
+
+router.get('/subscribe', (req, res) => {
+  res.render('general/addSubscriber');
+})
+
+router.post('/subscribe', (req, res) => {
+  var errors = [];
+  var name = req.body.name;
+  var email = req.body.email;
+
+  if (name.length === 0) {
+    errors.push({
+      text: 'Name is required'
+    });
+  }
+
+  if (email.length === 0) {
+    errors.push({
+      text: 'Email is required'
+    });
+  }
+
+  if (errors.length > 0) {
+    res.render('general/addSubscriber', {
+      errors,
+      name,
+      email
+    });
+  } else {
+    new Subscriber({
+      name,
+      email
+    })
+    .save((err) => {
+      if (err) {
+        console.log(err);
+        return ;
+      }
+      req.flash('success_msg', "Added to the subscribe's list");
+      res.redirect('/');
+    });
+  }
 });
 
 module.exports = router;
