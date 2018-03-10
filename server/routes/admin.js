@@ -43,7 +43,7 @@ router.get('/articles', (req, res) => {
 });
 
 router.get('/articles/add', (req, res) => {
-  res.render('admin/editArticle', {
+  res.render('admin/addArticle', {
     layout: 'admin',
   });
 });
