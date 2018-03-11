@@ -4,32 +4,32 @@
       <div class="mdl-card__media">
         <img class="article-image" src="{{img}}" border="0" alt="">
       </div>
-      <div class="mdl-card__menu">
-        <a href="/admin/articles/{{_id}}" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-          <i class="material-icons">visibility</i>
-        </a>
-        <a href="/admin/articles/edit/{{_id}}" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-          <i class="material-icons">edit</i>
-        </a>
-        <form action="/admin/articles/{{_id}}?_method=DELETE" method="post">
-          <input type="hidden" name="_method" value="DELETE">
-          <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" value="DELETE">
-            <i class="material-icons">delete</i>
-          </button>
-        </form>
-      </div>
       <div class="mdl-card__title">
         <h2 class="mdl-card__title-text">{{title}}</h2>
       </div>
       <div class="mdl-card__supporting-text">
         {{description}}
       </div>
-    </div>
-    {{else}}
-    <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--8dp portfolio-card clickable">
-      <div class="mdl-card__title">
-        <h1 class="mdl-card__title-text">Let's get started. Add some Articles</h1>
+      <div class="mdl-card__menu">
+        <form action="/admin/articles/{{_id}}?_method=DELETE" method="post">
+          <input type="hidden" name="_method" value="DELETE">
+          <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" value="DELETE">
+            <i class="material-icons">delete</i>
+          </button>
+          <a href="/admin/articles/{{_id}}" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">visibility</i>
+          </a>
+          <a href="/admin/articles/edit/{{_id}}" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">edit</i>
+          </a>
+        </form>
       </div>
     </div>
+    {{else}}
+      <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--8dp portfolio-card clickable">
+        <div class="mdl-card__title">
+          <h1 class="mdl-card__title-text">Let's get started. Add some Articles</h1>
+        </div>
+      </div>
   {{/each}}
 </section>

@@ -1,0 +1,33 @@
+<div class="mdl-grid site-max-width">
+  <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp page-content">
+
+    <div class="mdl-card__title">
+      <h1 class="mdl-card__title-text">{{article.title}}</h1>
+    </div>
+
+    <div class="mdl-card__supporting-text">
+      {{article.date}}
+    </div>
+
+    {{#if article.img}}
+      <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp page-content">
+        <div class="mdl-card__media">
+          <img class="article-image" src="{{article.img}}" border="0">
+        </div>
+      </div>
+    {{/if}}
+
+    <div class="mdl-card__supporting-text" style="font-size: 1em">
+      {{{article.article}}}
+      <form action="/admin/articles/{{article._id}}?_method=DELETE" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" value="DELETE">
+          <i class="material-icons">delete</i>
+        </button>
+        <a href="/admin/articles/edit/{{article.id}}" class="mdl-button mdl-js-button mdl-button--icon">
+          <i class="material-icons">edit</i>
+        </a>
+      </form>
+    </div>
+  </div>
+</div>

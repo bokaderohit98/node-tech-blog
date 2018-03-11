@@ -92,7 +92,6 @@ router.post('/contact', (req, res) => {
 });
 
 router.get('/articles/:id', (req, res) => {
-  const host = process.env.HOST;
   const id = req.params.id;
   var articles = [];
   Article.findById(id).then((article) => {

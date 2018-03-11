@@ -60,6 +60,19 @@ router.get('/articles/edit/:id', (req, res) => {
     });
 });
 
+router.get('/articles/:id', (req, res) => {
+  Article.findById(req.params.id)
+    .then((article) => {
+      res.render('admin/articlePage', {
+        layout: 'admin',
+        article
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 router.post('/articles', (req, res) => {
   var errors = [];
   var article = {
@@ -179,13 +192,13 @@ router.get('/subscribers', (req, res) => {
 
 router.delete('/subscribers/:id', (req, res) => {
   Subscriber.findByIdAndRemove(req.params.id)
-  .then((subscriber) => {
-    req.flash('success_msg', 'Subscriber deleted');
-    res.redirect('/admin/subscribers');
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .then((subscriber) => {
+      req.flash('success_msg', 'Subscriber deleted');
+      res.redirect('/admin/subscribers');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 })
 
 router.get('/interact', (req, res) => {
