@@ -101,7 +101,7 @@ router.post('/articles', (req, res) => {
   }
 
   if (errors.length > 0) {
-    res.render('admin/editArticle', {
+    res.render('admin/addArticle', {
       errors,
       article
     });
@@ -112,7 +112,7 @@ router.post('/articles', (req, res) => {
           console.log(err);
         } else {
           req.flash('success_msg', 'Article is added');
-          res.redirect('/admin/articles');
+          res.redirect(`/admin/articles/`);
         }
       });
   }
@@ -157,7 +157,7 @@ router.put('/articles/:id', (req, res) => {
       })
       .then((udatedArticle) => {
         req.flash('success_msg', 'Article updated');
-        res.redirect('/admin/articles/' + id);
+        res.redirect(`/admin/articles/${id}`);
       }).catch((err) => {
         console.log(err);
       });
