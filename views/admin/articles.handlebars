@@ -13,15 +13,12 @@
       <div class="mdl-card__menu">
         <form action="/admin/articles/{{_id}}?_method=DELETE" method="post">
           <input type="hidden" name="_method" value="DELETE">
-          <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" value="DELETE">
-            <i class="material-icons">delete</i>
-          </button>
-          <a href="/admin/articles/{{_id}}" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-            <i class="material-icons">visibility</i>
-          </a>
-          <a href="/admin/articles/edit/{{_id}}" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-            <i class="material-icons">edit</i>
-          </a>
+          <nav class="card-fab-container">
+            <button class="card-buttons" value="DELETE"><img src="/img/delete.png"></button>
+            <a href="/admin/articles/edit/{{id}}" class="card-buttons"><img src="/img/edit.png"></a>
+            <a href="/admin/articles/{{id}}" class="card-buttons"><img src="/img/see.png"></a>
+            <a class="card-buttons" href="#"><img src="/img/menu.png"></a>
+          </nav>
         </form>
       </div>
     </div>

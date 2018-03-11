@@ -23,7 +23,7 @@
 
 <section class="section--center mdl-grid site-max-width">
   {{#each articles}}
-    <div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card clickable" onclick="location.href='/articles/{{_id}}'">
+    <div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card clickable">
       {{#if img}}
         <div class="mdl-card__media">
           <img class="article-image" src="{{img}}" border="0" alt="">
@@ -35,6 +35,10 @@
       <div class="mdl-card__supporting-text">
         {{description}}
       </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="/articles/{{_id}}">Read</a>
+      </div>
+      {{> _shareButtonCard}}
     </div>
     {{else}}
 
