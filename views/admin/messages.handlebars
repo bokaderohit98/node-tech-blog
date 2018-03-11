@@ -1,0 +1,28 @@
+<section class="section--center mdl-grid site-max-width">
+  {{#each messages}}
+    <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp portfolio-card clickable">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">{{name}}</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        {{email}}
+      </div>
+      <div class="mdl-card__supporting-text">
+        {{message}}
+      </div>
+      <div class="mdl-card__menu">
+        <form action="/admin/messages/{{_id}}?_method=DELETE" method="post">
+          <input type="hidden" name="_method" value="DELETE">
+          <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" value="DELETE">
+            <i class="material-icons">delete</i>
+          </button>
+          <a href="/admin/interact/{{_id}}" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">email</i>
+          </a>
+        </form>
+      </div>
+      </div>
+    {{else}}
+
+  {{/each}}
+</section>

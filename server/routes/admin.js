@@ -6,6 +6,8 @@ const {
 } = require('../helpers/auth');
 const Article = require('../models/Article');
 const Subscriber = require('../models/Subscriber');
+const Mail = require('../models/Mail');
+const mongoose = require('mongoose');
 
 router.get('/login', (req, res) => {
   res.render('admin/login', {
@@ -79,7 +81,7 @@ router.post('/articles', (req, res) => {
     title: req.body.title,
     description: req.body.description,
     img: req.body.img,
-    article: req.body.article
+    article: req.body.article,
   };
 
   if (article.title.length === 0) {
@@ -106,10 +108,11 @@ router.post('/articles', (req, res) => {
       article
     });
   } else {
-    var newArticle = new Article(article)
+    new Article(article)
       .save((err) => {
         if (err) {
           console.log(err);
+          console.log('error occured');
         } else {
           req.flash('success_msg', 'Article is added');
           res.redirect(`/admin/articles/`);
@@ -155,7 +158,7 @@ router.put('/articles/:id', (req, res) => {
     Article.findByIdAndUpdate(id, article, {
         new: true
       })
-      .then((udatedArticle) => {
+      .then((updatedArticle) => {
         req.flash('success_msg', 'Article updated');
         res.redirect(`/admin/articles/${id}`);
       }).catch((err) => {
@@ -179,7 +182,6 @@ router.delete('/articles/:id', (req, res) => {
 router.get('/subscribers', (req, res) => {
   Subscriber.find({})
     .then((subscribers) => {
-      console.log(subscribers);
       res.render('admin/subscribers', {
         layout: 'admin',
         subscribers
@@ -199,7 +201,31 @@ router.delete('/subscribers/:id', (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-})
+});
+
+router.get('/messages', (req, res) => {
+  Mail.find({})
+    .then((messages) => {
+      res.render('admin/messages', {
+        layout: 'admin',
+        messages
+      });
+    }).catch((err) => {
+      console.log(err);
+    });
+});
+
+router.delete('/messages/:id', (req, res) => {
+  Mail.findByIdAndRemove(req.params.id)
+    .then((subscriber) => {
+      req.flash('success_msg', 'Message deleted');
+      res.redirect('/admin/messages');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 
 router.get('/interact', (req, res) => {
   res.render('admin/interact', {

@@ -97,7 +97,7 @@ router.get('/articles/:id', (req, res) => {
   var articles = [];
   Article.findById(id).then((article) => {
     Article.find({
-        date: {
+        'date': {
           $lt: article.date
         }
       })
@@ -115,7 +115,7 @@ router.get('/articles/:id', (req, res) => {
       });
 
     Article.find({
-        date: {
+        'date': {
           $gt: article.date
         }
       })

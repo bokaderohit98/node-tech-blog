@@ -13,6 +13,11 @@ const AdminSchema = new Schema({
   password: {
     type: String,
     required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+    default: "normal"
   }
 });
 
