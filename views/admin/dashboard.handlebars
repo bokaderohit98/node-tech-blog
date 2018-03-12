@@ -1,0 +1,87 @@
+<!--first row-->
+<div class="mdl-grid site-max-width">
+  <!--main article-->
+  <div class="mdl-cell mdl-cell--8-col mdl-card mdl-shadow--4dp portfolio-card">
+    <div class="mdl-card__title">
+      <h6 class="mdl-card__title-text">Recent Article</h6>
+    </div>
+    <div class="mdl-grid site-max-width">
+      <!--image-->
+      <div class="mdl-cell mdl-cell--6-col mdl-card mdl-shadow--4dp portfolio-card">
+        <div class="mdl-card__media">
+          <img class="article-image" src="{{article.img}}" border="0" alt="">
+        </div>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col mdl-card mdl-shadow--4dp portfolio-card">
+        <div class="mdl-card__title">
+          <h5 class="mdl-card__title-text">{{article.title}}</h5>
+        </div>
+        <div class="mdl-card__supporting-text mdl-card--expand">
+          {{article.description}}
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="/admin/articles/">View All</a>
+          <a class="mdl-button mdl-js-button mdl-button--icon" href="/admin/articles/{{article._id}}"><i class="material-icons">arrow_forward</i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--subscriber-->
+  <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--4dp portfolio-card">
+    <div class="mdl-card__title">
+      <h6 class="mdl-card__title-text">Subscribers {{subscroberCount}}</h6>
+    </div>
+    {{> _subscriber}}
+    <div class="mdl-card__actions mdl-card--border">
+      <a class="mdl-button mdl-js-button mdl-button--icon" href="/admin/subscribers/"><i class="material-icons">arrow_forward</i></a>
+    </div>
+  </div>
+</div>
+
+<!--second row-->
+<div class="mdl-grid site-max-width">
+  <!--Recent Message-->
+  <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--4dp portfolio-card">
+    <div class="mdl-card__title">
+      <h6 class="mdl-card__title-text">Recent Message</h6>
+    </div>
+    <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp portfolio-card">
+      <div class="mdl-card__title">
+        <h5 class="mdl-card__title-text">{{message.name}}</h5>
+      </div>
+      <div class="mdl-card__supporting-text mdl-card--expand">
+        {{message.date}}
+      </div>
+      <div class="mdl-card__supporting-text mdl-card--expand">
+        {{message.message}}
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="/admin/messages/">View All</a>
+        <a class="mdl-button mdl-js-button mdl-button--icon" href="/admin/interact/{{_id}}"><i class="material-icons">arrow_forward</i></a>
+      </div>
+    </div>
+  </div>
+  <!--Ineract-->
+  <!--image-->
+  <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--4dp portfolio-card">
+    <div class="mdl-card__media">
+      <img class="article-image" src="/img/interact.jpg" border="0" alt="">
+    </div>
+    <div class="mdl-card__title">
+      <h6 class="mdl-card__title-text mdl-card--expand">Total Messages {{messageCount}}</h6>
+    </div>
+  </div>
+  <!--text-->
+  <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--4dp portfolio-card">
+    <div class="mdl-card__title">
+      <h5 class="mdl-card__title-text">Interact With your Audience</h5>
+    </div>
+    <div class="mdl-card__supporting-text mdl-card--expand">
+      <p>It's always good to get in touch with your readers and have their opinion. Go ahead and write to them.</P>
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a class="mdl-button mdl-js-button mdl-button--icon" href="/admin/interact/bulk"><i class="material-icons">arrow_forward</i></a>
+    </div>
+  </div>
+</div>
