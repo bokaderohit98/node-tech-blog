@@ -91,7 +91,6 @@ router.get('/articles/:id', (req, res) => {
       })
   }).catch((err) => {
     console.log(err);
-    return;
   });
 });
 
