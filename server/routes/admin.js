@@ -173,10 +173,10 @@ router.delete('/messages/:id', (req, res) => {
 });
 
 
-router.get('/interact/:email', (req, res) => {
+router.get('/interact/:id', (req, res) => {
   res.render('admin/interact', {
     layout: 'admin',
-    email: req.params.email
+    _id: req.params.id
   });
 });
 
@@ -204,13 +204,19 @@ router.post('/interact', (req, res) => {
         console.log(err);
       });
   } else {
-    mailOptions = {
-      from,
-      to,
-      subject,
-      text
-    };
-    mailIt(req, res, mailOptions);
+    Mail.findById(to, 'email -_id')
+    .then((email) => {
+      to = email;
+      mailOptions = {
+        from,
+        to,
+        subject,
+        text
+      };
+      mailIt(req, res, mailOptions);
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 });
 
