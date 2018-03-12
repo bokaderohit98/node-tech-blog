@@ -19,7 +19,8 @@ router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/admin/login',
-    failureFlash: true
+    failureFlash: true,
+    failureMessage: 'email and password dont match'
   })(req, res, next);
 })
 

@@ -3,7 +3,9 @@
   bottom: 0;
   position: fixed;
   margin: 1em;
-  right: 20px;
+  left: 20px;
+  z-index: 10;
+
 }
 
 .buttons:active, .buttons:focus, .buttons:hover {
