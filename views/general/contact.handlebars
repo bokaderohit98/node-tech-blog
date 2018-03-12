@@ -8,16 +8,16 @@
         <div class="mdl-card__supporting-text">
           <form action="/contact" method="POST" class="form-contact">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" pattern="[A-Z,a-z, ]*" type="text" id="name" required name="name" value= {{name}}>
+              <input class="mdl-textfield__input" pattern="[A-Z,a-z, ]*" type="text" id="name" required name="name">
               <label class="mdl-textfield__label" for="name">Name...</label>
               <span class="mdl-textfield__error">Letters and spaces only</span>
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="email" id="email" name="email" required value= {{email}}>
+              <input class="mdl-textfield__input" type="email" id="email" name="email" required>
               <label class="mdl-textfield__label" for="email">Email...</label>
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <textarea class="mdl-textfield__input" type="text" rows="5" id="message" required name="message">{{message}}</textarea>
+              <textarea class="mdl-textfield__input" type="text" rows="5" id="message" required name="message"></textarea>
               <label class="mdl-textfield__label" for="message">Message</label>
             </div>
             <p>

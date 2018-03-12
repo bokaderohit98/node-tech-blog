@@ -1,0 +1,27 @@
+<div class="section--center mdl-grid site-max-width">
+  <div class="section--center mdl-cell mdl-cell--12-col mdl-card mdl-shadow--8dp page-content">
+    <div class="mdl-card__title">
+      <h1 class="mdl-card__title-text">Send Message</h1>
+    </div>
+    <div class="mdl-grid site-copy">
+      <div class="mdl-cell mdl-cell--12-col">
+        <div class="mdl-card__supporting-text">
+          <form action="/admin/interact/" method="POST" class="form-contact">
+            <input type="hidden" id="email" name="email" value="{{email}}">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="subject" name="subject" required>
+              <label class="mdl-textfield__label" for="title">Subject...</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <textarea class="mdl-textfield__input" type="text" rows="10" id="message" required name="message"></textarea>
+              <label class="mdl-textfield__label" for="description">Message</label>
+            </div>
+            <p>
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">Send</button>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

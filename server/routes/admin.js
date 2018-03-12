@@ -1,13 +1,13 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
-const {
-  ensureAuthenticated
-} = require('../helpers/auth');
+const ensureAuthenticated = require('../helpers/auth');
+const mailIt = require('../helpers/mailIt');
+
 const Article = require('../models/Article');
 const Subscriber = require('../models/Subscriber');
 const Mail = require('../models/Mail');
-const mongoose = require('mongoose');
 
 router.get('/login', (req, res) => {
   res.render('admin/login', {
@@ -173,10 +173,45 @@ router.delete('/messages/:id', (req, res) => {
 });
 
 
-router.get('/interact', (req, res) => {
+router.get('/interact/:email', (req, res) => {
   res.render('admin/interact', {
     layout: 'admin',
+    email: req.params.email
   });
+});
+
+router.post('/interact', (req, res) => {
+  var mailOptions;
+  var from = `Team Technomaniac <${process.env.EMAIL}>`;
+  var to = req.body.email;
+  var subject = req.body.subject;
+  var text = req.body.message;
+  var reciepients;
+
+  if (to === 'bulk') {
+    Subscriber.find({}, 'email -_id')
+      .then((objects) => {
+        var emails = objects.map((object) => object.email);
+        to = emails.join(', ');
+        mailOptions = {
+          from,
+          to,
+          subject,
+          text
+        };
+        mailIt(req, res, mailOptions);
+      }).catch((err) => {
+        console.log(err);
+      });
+  } else {
+    mailOptions = {
+      from,
+      to,
+      subject,
+      text
+    };
+    mailIt(req, res, mailOptions);
+  }
 });
 
 
