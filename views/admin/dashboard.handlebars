@@ -30,9 +30,11 @@
   <!--subscriber-->
   <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--4dp portfolio-card">
     <div class="mdl-card__title">
-      <h6 class="mdl-card__title-text">Subscribers {{subscroberCount}}</h6>
+      <h6 class="mdl-card__title-text">Subscribers {{subscriberCount}}</h6>
     </div>
-    {{> _subscriber}}
+    <div class="mdl-card mdl-card__supporting-text mdl-card--expand">
+      {{> _subscribers}}
+    </div>
     <div class="mdl-card__actions mdl-card--border">
       <a class="mdl-button mdl-js-button mdl-button--icon" href="/admin/subscribers/"><i class="material-icons">arrow_forward</i></a>
     </div>
@@ -58,7 +60,7 @@
       </div>
       <div class="mdl-card__actions mdl-card--border">
         <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="/admin/messages/">View All</a>
-        <a class="mdl-button mdl-js-button mdl-button--icon" href="/admin/interact/{{_id}}"><i class="material-icons">arrow_forward</i></a>
+        <a class="mdl-button mdl-js-button mdl-button--icon" href="/admin/interact/{{message._id}}"><i class="material-icons">arrow_forward</i></a>
       </div>
     </div>
   </div>

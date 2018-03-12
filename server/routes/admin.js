@@ -25,9 +25,55 @@ router.post('/login', (req, res, next) => {
 })
 
 router.get('/', (req, res) => {
-  res.render('admin/dashboard', {
-    layout: 'admin',
-  });
+  var object = {};
+
+  Article.find({})
+    .sort({
+      date: -1
+    })
+    .limit(1)
+    .then((article) => {
+      object.article = article[0];
+
+      Subscriber.find({})
+        .sort({
+          _id: -1
+        })
+        .limit(3)
+        .then((subscribers) => {
+          object.subscribers = subscribers;
+
+          Mail.find({})
+          .sort({
+            _id: -1
+          })
+          .limit(1)
+          .then((message) => {
+            object.message = message[0];
+
+            Subscriber.count({})
+            .then((subscriberCount) => {
+              object.subscriberCount = subscriberCount;
+
+              Mail.count({})
+              .then((messageCount) => {
+                object.messageCount = messageCount;
+
+                res.render('admin/dashboard', {
+                  layout: 'admin',
+                  article: object.article,
+                  subscriberCount: object.subscriberCount,
+                  subscribers: object.subscribers,
+                  message: object.message,
+                  messageCount: object.messageCount
+                });
+              });
+            });
+          });
+        });
+    }).catch((err) => {
+      console.log(err);
+    });
 });
 
 router.get('/articles', (req, res) => {
@@ -172,7 +218,6 @@ router.delete('/messages/:id', (req, res) => {
     });
 });
 
-
 router.get('/interact/:id', (req, res) => {
   res.render('admin/interact', {
     layout: 'admin',
@@ -219,7 +264,6 @@ router.post('/interact', (req, res) => {
     });
   }
 });
-
 
 
 module.exports = router;
