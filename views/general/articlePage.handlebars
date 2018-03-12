@@ -1,5 +1,3 @@
-{{> _shareFab}}
-
 <div class="mdl-grid site-max-width">
   <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp page-content">
 
@@ -23,8 +21,7 @@
 
   </div>
 
-  <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp page-content">
-    {{_facebookComments}}
+  <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp page-content" id="disqus_thread">
   </div>
 
 </div>
@@ -39,3 +36,6 @@
     </div>
   </div>
 {{/if}}
+
+{{> _shareFab}}
+{{> _comments}}

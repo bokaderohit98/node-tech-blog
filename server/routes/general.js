@@ -3,6 +3,7 @@ const router = express.Router();
 const Article = require('../models/Article');
 const Mail = require('../models/Mail');
 const Subscriber = require('../models/Subscriber');
+const urlencode = require('../helpers/urlencode');
 
 router.get('/', (req, res) => {
   Article.find({})
@@ -11,8 +12,9 @@ router.get('/', (req, res) => {
       date: -1
     })
     .then((articles) => {
+      articles = urlencode(articles)
       res.render('general/index', {
-        mainArticles: articles
+        mainArticles: articles,
       });
     })
     .catch((err) => {
@@ -21,13 +23,15 @@ router.get('/', (req, res) => {
 });
 
 router.get('/articles', (req, res) => {
+  var host = process.env.HOST;
   Article.find({})
     .sort({
       date: -1
     })
     .then((articles) => {
+      articles = urlencode(articles);
       res.render('general/articles', {
-        articles
+        articles,
       });
     })
     .catch((err) => {
@@ -44,29 +48,10 @@ router.get('/contact', (req, res) => {
 });
 
 router.post('/contact', (req, res) => {
-  var errors = [];
   var email = req.body.email;
   var name = req.body.name;
   var message = req.body.message;
 
-  if (email.length === 0) {
-    errors.push({
-      text: 'Email Required'
-    });
-  }
-
-  if (name.length === 0) {
-    errors.push({
-      text: 'Name Required'
-    });
-  }
-  if (message.length === 0) {
-    errors.push({
-      text: 'Message Required'
-    });
-  }
-
-  if (errors.length === 0) {
     new Mail({
       email,
       name,
@@ -80,62 +65,30 @@ router.post('/contact', (req, res) => {
         res.redirect('/');
       }
     });
-  } else {
-    console.log(errors);
-    res.render('general/contact', {
-      errors,
-      email,
-      name,
-      message
-    });
-  }
 });
 
 router.get('/articles/:id', (req, res) => {
   var host = process.env.HOST;
   const id = req.params.id;
-  var articles = [];
   Article.findById(id).then((article) => {
+    article = urlencode(article);
     Article.find({
-        'date': {
-          $lt: article.date
+        _id: {
+          $ne: article._id
         }
       })
       .sort({
         date: -1
       })
-      .limit(2)
-      .then((lowers) => {
-        lowers.forEach((lower) => {
-          articles.push(lower);
+      .limit(4)
+      .then((relatedArticles) => {
+        relatedArticles = urlencode(relatedArticles);
+        res.render('general/articlePage', {
+          article,
+          articles: relatedArticles,
+          host
         });
       })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    Article.find({
-        'date': {
-          $gt: article.date
-        }
-      })
-      .sort({
-        date: 1
-      })
-      .limit(2)
-      .then((uppers) => {
-        uppers.forEach((upper) => {
-          articles.push(upper);
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    res.render('general/articlePage', {
-      article,
-      articles,
-      host
-    });
   }).catch((err) => {
     console.log(err);
     return;
@@ -143,34 +96,14 @@ router.get('/articles/:id', (req, res) => {
 });
 
 router.get('/subscribe', (req, res) => {
-  res.render('general/addSubscriber');
+  res.render('general/subscribe');
 })
 
 router.post('/subscribe', (req, res) => {
-  var errors = [];
   var name = req.body.name;
   var email = req.body.email;
 
-  if (name.length === 0) {
-    errors.push({
-      text: 'Name is required'
-    });
-  }
-
-  if (email.length === 0) {
-    errors.push({
-      text: 'Email is required'
-    });
-  }
-
-  if (errors.length > 0) {
-    res.render('general/addSubscriber', {
-      errors,
-      name,
-      email
-    });
-  } else {
-    new Subscriber({
+  new Subscriber({
       name,
       email
     })
@@ -182,7 +115,6 @@ router.post('/subscribe', (req, res) => {
       req.flash('success_msg', "Added to the subscribe's list");
       res.redirect('/');
     });
-  }
 });
 
 module.exports = router;

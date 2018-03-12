@@ -76,7 +76,6 @@ router.get('/articles/:id', (req, res) => {
 });
 
 router.post('/articles', (req, res) => {
-  var errors = [];
   var article = {
     title: req.body.title,
     description: req.body.description,
@@ -84,45 +83,19 @@ router.post('/articles', (req, res) => {
     article: req.body.article,
   };
 
-  if (article.title.length === 0) {
-    errors.push({
-      text: 'Title is required'
+  new Article(article)
+    .save((err) => {
+      if (err) {
+        console.log(err);
+        console.log('error occured');
+      } else {
+        req.flash('success_msg', 'Article is added');
+        res.redirect('/admin/articles/');
+      }
     });
-  }
-
-  if (article.description.length === 0) {
-    errors.push({
-      text: 'Description is required'
-    });
-  }
-
-  if (article.article.length === 0) {
-    errors.push({
-      text: 'Article is required'
-    });
-  }
-
-  if (errors.length > 0) {
-    res.render('admin/addArticle', {
-      errors,
-      article
-    });
-  } else {
-    new Article(article)
-      .save((err) => {
-        if (err) {
-          console.log(err);
-          console.log('error occured');
-        } else {
-          req.flash('success_msg', 'Article is added');
-          res.redirect(`/admin/articles/`);
-        }
-      });
-  }
 });
 
 router.put('/articles/:id', (req, res) => {
-  var errors = [];
   var id = req.params.id;
   var article = {
     title: req.body.title,
@@ -130,41 +103,15 @@ router.put('/articles/:id', (req, res) => {
     img: req.body.img,
     article: req.body.article
   };
-
-  if (article.title.length === 0) {
-    errors.push({
-      text: 'Title is required'
+  Article.findByIdAndUpdate(id, article, {
+      new: true
+    })
+    .then((updatedArticle) => {
+      req.flash('success_msg', 'Article updated');
+      res.redirect(`/admin/articles/${id}`);
+    }).catch((err) => {
+      console.log(err);
     });
-  }
-
-  if (article.description.length === 0) {
-    errors.push({
-      text: 'Description is required'
-    });
-  }
-
-  if (article.article.length === 0) {
-    errors.push({
-      text: 'Article is required'
-    });
-  }
-
-  if (errors.length > 0) {
-    res.render('admin/editArticle', {
-      errors,
-      article
-    });
-  } else {
-    Article.findByIdAndUpdate(id, article, {
-        new: true
-      })
-      .then((updatedArticle) => {
-        req.flash('success_msg', 'Article updated');
-        res.redirect(`/admin/articles/${id}`);
-      }).catch((err) => {
-        console.log(err);
-      });
-  }
 });
 
 router.delete('/articles/:id', (req, res) => {
@@ -195,7 +142,6 @@ router.get('/subscribers', (req, res) => {
 router.delete('/subscribers/:id', (req, res) => {
   Subscriber.findByIdAndRemove(req.params.id)
     .then((subscriber) => {
-      req.flash('success_msg', 'Subscriber deleted');
       res.redirect('/admin/subscribers');
     })
     .catch((err) => {
@@ -218,7 +164,6 @@ router.get('/messages', (req, res) => {
 router.delete('/messages/:id', (req, res) => {
   Mail.findByIdAndRemove(req.params.id)
     .then((subscriber) => {
-      req.flash('success_msg', 'Message deleted');
       res.redirect('/admin/messages');
     })
     .catch((err) => {

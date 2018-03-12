@@ -1,14 +1,21 @@
-{{#if success_msg}}
-  <span class="mdl-chip mdl-chip--deletable" style="background: #8BC34A">
-  <span class="mdl-chip__text">{{success_msg}}</span>
-  <button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
-  </span>
+{{#if error_msg }}
+<section class="section--center mdl-grid site-max-width">
+    <div class="mdl-cell mdl-cell--4col mdl-cell--middle">
+      <span class="mdl-chip mdl-chip--deletable error">
+        <span class="mdl-chip__text">{{error_msg}}</span>
+      <button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+      </span>
+    </div>
+</section>
 {{/if}}
 
-
-{{#if error_msg}}
-  <span class="mdl-chip mdl-chip--deletable" style="background: #F44336; color: #ffffff">
-  <span class="mdl-chip__text">{{error_msg}}</span>
-  <button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
-  </span>
+{{#if success_msg }}
+<section class="section--center mdl-grid site-max-width">
+    <div class="mdl-cell mdl-cell--4col mdl-cell--middle">
+      <span class="mdl-chip mdl-chip--deletable success">
+        <span class="mdl-chip__text">{{success_msg}}</span>
+      <button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+      </span>
+    </div>
+</section>
 {{/if}}

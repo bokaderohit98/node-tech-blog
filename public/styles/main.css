@@ -220,6 +220,16 @@ footer .mdl-logo a {
   margin: 0 auto;
 }
 
-.clickable {
-  cursor: pointer;
+.mdl-card {
+  min-height: 0;
+}
+
+.error {
+  background: #F44336;
+  color: #ffffff;
+}
+
+.success {
+  background: #004D40;
+  color: #ffffff;
 }
