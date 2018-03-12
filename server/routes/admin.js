@@ -17,14 +17,20 @@ router.get('/login', (req, res) => {
 
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
-    successRedirect: '/',
+    successRedirect: '/admin',
     failureRedirect: '/admin/login',
-    failureFlash: true,
-    failureMessage: 'email and password dont match'
+    failureFlash: 'Invalid username or password',
   })(req, res, next);
-})
+});
 
-router.get('/', (req, res) => {
+router.get('/logout', ensureAuthenticated, (req, res) => {
+  req.logout();
+  req.flash('success_msg', 'You have been logged out');
+  res.redirect('/admin/login');
+});
+
+
+router.get('/', ensureAuthenticated, (req, res) => {
   var object = {};
 
   Article.find({})
@@ -76,7 +82,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/articles', (req, res) => {
+router.get('/articles', ensureAuthenticated, (req, res) => {
   Article.find({})
     .sort({
       date: -1
@@ -91,13 +97,13 @@ router.get('/articles', (req, res) => {
     });
 });
 
-router.get('/articles/add', (req, res) => {
+router.get('/articles/add', ensureAuthenticated, (req, res) => {
   res.render('admin/addArticle', {
     layout: 'admin',
   });
 });
 
-router.get('/articles/edit/:id', (req, res) => {
+router.get('/articles/edit/:id', ensureAuthenticated, (req, res) => {
   Article.findById(req.params.id)
     .then((article) => {
       res.render('admin/editArticle', {
@@ -109,7 +115,7 @@ router.get('/articles/edit/:id', (req, res) => {
     });
 });
 
-router.get('/articles/:id', (req, res) => {
+router.get('/articles/:id', ensureAuthenticated, (req, res) => {
   Article.findById(req.params.id)
     .then((article) => {
       res.render('admin/articlePage', {
@@ -122,7 +128,7 @@ router.get('/articles/:id', (req, res) => {
     });
 });
 
-router.post('/articles', (req, res) => {
+router.post('/articles', ensureAuthenticated, (req, res) => {
   var article = {
     title: req.body.title,
     description: req.body.description,
@@ -142,7 +148,7 @@ router.post('/articles', (req, res) => {
     });
 });
 
-router.put('/articles/:id', (req, res) => {
+router.put('/articles/:id', ensureAuthenticated, (req, res) => {
   var id = req.params.id;
   var article = {
     title: req.body.title,
@@ -161,7 +167,7 @@ router.put('/articles/:id', (req, res) => {
     });
 });
 
-router.delete('/articles/:id', (req, res) => {
+router.delete('/articles/:id', ensureAuthenticated, (req, res) => {
 
   Article.findByIdAndRemove(req.params.id)
     .then((deletedArticle) => {
@@ -173,7 +179,7 @@ router.delete('/articles/:id', (req, res) => {
     })
 });
 
-router.get('/subscribers', (req, res) => {
+router.get('/subscribers', ensureAuthenticated, (req, res) => {
   Subscriber.find({})
     .then((subscribers) => {
       res.render('admin/subscribers', {
@@ -186,7 +192,7 @@ router.get('/subscribers', (req, res) => {
     })
 });
 
-router.delete('/subscribers/:id', (req, res) => {
+router.delete('/subscribers/:id', ensureAuthenticated, (req, res) => {
   Subscriber.findByIdAndRemove(req.params.id)
     .then((subscriber) => {
       res.redirect('/admin/subscribers');
@@ -196,7 +202,7 @@ router.delete('/subscribers/:id', (req, res) => {
     });
 });
 
-router.get('/messages', (req, res) => {
+router.get('/messages', ensureAuthenticated, (req, res) => {
   Mail.find({})
     .then((messages) => {
       res.render('admin/messages', {
@@ -208,7 +214,7 @@ router.get('/messages', (req, res) => {
     });
 });
 
-router.delete('/messages/:id', (req, res) => {
+router.delete('/messages/:id', ensureAuthenticated, (req, res) => {
   Mail.findByIdAndRemove(req.params.id)
     .then((subscriber) => {
       res.redirect('/admin/messages');
@@ -218,14 +224,14 @@ router.delete('/messages/:id', (req, res) => {
     });
 });
 
-router.get('/interact/:id', (req, res) => {
+router.get('/interact/:id', ensureAuthenticated, (req, res) => {
   res.render('admin/interact', {
     layout: 'admin',
     _id: req.params.id
   });
 });
 
-router.post('/interact', (req, res) => {
+router.post('/interact', ensureAuthenticated, (req, res) => {
   var mailOptions;
   var from = `Team Technomaniac <${process.env.EMAIL}>`;
   var to = req.body.email;

@@ -1,42 +1,39 @@
 const localStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 
-const admin = require('../models/Admin');
+const Admin = require('../models/Admin');
 
 module.exports = (passport) => {
   passport.use(new localStrategy({
-      adminnameField: 'email'
+      usernameField: 'email'
     },
     (email, password, done) => {
       Admin.findOne({
         email
-      }).then((admin) => {
-        if (admin) {
-          bcrypt.compare(password, admin.password).then((result) => {
-            if (!result) {
+      }).then((user) => {
+        if (user) {
+            if (user.password !== password) {
               return done(null, false, {
                 message: 'Email and Password does not match.'
               });
             } else {
-              return done(null, admin);
+              return done(null, user);
             }
-          });
         } else {
           return done(null, false, {
-            message: 'Admin not found'
+            message: 'user not found'
           })
         }
       });
-    }))
+    }));
 
-  passport.serializeUser(function(admin, done) {
-    done(null, admin.id);
+  passport.serializeUser(function(user, done) {
+    done(null, user.id);
   });
 
   passport.deserializeUser(function(id, done) {
-    admin.findById(id, function(err, admin) {
-      done(err, admin);
+    Admin.findById(id, function(err, user) {
+      done(err, user);
     });
   });
 };

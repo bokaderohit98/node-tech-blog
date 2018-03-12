@@ -10,6 +10,14 @@ img {
   padding: 0;
   -ms-flex-pack: center;
   justify-content: center;
+  background: rgba(17, 59, 97, 1);
+  background: -moz-linear-gradient(-45deg, rgba(17, 59, 97, 1) 10%, rgba(17, 59, 97, 1) 19%, rgba(60, 86, 112, 1) 57%, rgba(85, 102, 120, 1) 79%);
+  background: -webkit-gradient(left top, right bottom, color-stop(10%, rgba(17, 59, 97, 1)), color-stop(19%, rgba(17, 59, 97, 1)), color-stop(57%, rgba(60, 86, 112, 1)), color-stop(79%, rgba(85, 102, 120, 1)));
+  background: -webkit-linear-gradient(-45deg, rgba(17, 59, 97, 1) 10%, rgba(17, 59, 97, 1) 19%, rgba(60, 86, 112, 1) 57%, rgba(85, 102, 120, 1) 79%);
+  background: -o-linear-gradient(-45deg, rgba(17, 59, 97, 1) 10%, rgba(17, 59, 97, 1) 19%, rgba(60, 86, 112, 1) 57%, rgba(85, 102, 120, 1) 79%);
+  background: -ms-linear-gradient(-45deg, rgba(17, 59, 97, 1) 10%, rgba(17, 59, 97, 1) 19%, rgba(60, 86, 112, 1) 57%, rgba(85, 102, 120, 1) 79%);
+  background: linear-gradient(135deg, rgba(17, 59, 97, 1) 10%, rgba(17, 59, 97, 1) 19%, rgba(60, 86, 112, 1) 57%, rgba(85, 102, 120, 1) 79%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#113b61', endColorstr='#556678', GradientType=1);
 }
 
 .site-description {
@@ -101,7 +109,7 @@ img {
   max-width: 700px;
 }
 
-.welcome-card > .mdl-card__title {
+.welcome-card>.mdl-card__title {
   color: #fff;
   height: 290px;
   background: center/cover;
@@ -117,10 +125,10 @@ img {
 
 .event-card .mdl-card__title {
   -ms-flex-align: start;
-      align-items: flex-start;
+  align-items: flex-start;
 }
 
-.event-card .mdl-card__title > h4 {
+.event-card .mdl-card__title>h4 {
   margin-top: 0;
 }
 
@@ -129,16 +137,14 @@ img {
   display: flex;
   box-sizing: border-box;
   -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
 }
 
-.event-card .mdl-card__actions > .material-icons {
+.event-card .mdl-card__actions>.material-icons {
   padding-right: 10px;
 }
 
-.event-card .mdl-card__title,
-.event-card .mdl-card__actions,
-.event-card .mdl-card__actions > .mdl-button {
+.event-card .mdl-card__title, .event-card .mdl-card__actions, .event-card .mdl-card__actions>.mdl-button {
   color: #fff;
 }
 
@@ -184,7 +190,7 @@ img.article-image {
   height: 192px;
 }
 
-.demo-card-image > .mdl-card__actions {
+.demo-card-image>.mdl-card__actions {
   height: 52px;
   padding: 16px;
   background: rgba(0, 0, 0, 0.3);
@@ -232,4 +238,8 @@ footer .mdl-logo a {
 .success {
   background: #004D40;
   color: #ffffff;
+}
+
+.mdl-layout__header .mdl-layout__drawer-button {
+  background: #00000000;
 }

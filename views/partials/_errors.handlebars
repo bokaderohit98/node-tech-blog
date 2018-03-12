@@ -1,9 +1,19 @@
+{{#if error}}
+  <div class="mdl-cell mdl-cell--12col">
+    <span class="mdl-chip mdl-chip--deletable error">
+        <span class="mdl-chip__text">{{error}}</span>
+    <button type="button" class="mdl-chip__action" style="z-index: 3"><i class="material-icons">cancel</i></button>
+    </span>
+  </div>
+{{/if}}
+
+
 {{#each errors}}
-    <div class="mdl-cell mdl-cell--12col">
-      <span class="mdl-chip mdl-chip--deletable error">
+  <div class="mdl-cell mdl-cell--12col">
+    <span class="mdl-chip mdl-chip--deletable error">
         <span class="mdl-chip__text">{{text}}</span>
-      <button type="button" class="mdl-chip__action" style="z-index: 3"><i class="material-icons">cancel</i></button>
-      </span>
-    </div>
+    <button type="button" class="mdl-chip__action" style="z-index: 3"><i class="material-icons">cancel</i></button>
+    </span>
+  </div>
   {{else}}
 {{/each}}
