@@ -2,8 +2,11 @@ const mongoose = require('mongoose');
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
+const ObjectId = require('mongoose').Types.ObjectId;
+
 const ensureAuthenticated = require('../helpers/auth');
 const mailIt = require('../helpers/mailIt');
+const transporter = require('../config/nodemailer');
 
 const Article = require('../models/Article');
 const Subscriber = require('../models/Subscriber');
@@ -50,32 +53,32 @@ router.get('/', ensureAuthenticated, (req, res) => {
           object.subscribers = subscribers;
 
           Mail.find({})
-          .sort({
-            _id: -1
-          })
-          .limit(1)
-          .then((message) => {
-            object.message = message[0];
+            .sort({
+              _id: -1
+            })
+            .limit(1)
+            .then((message) => {
+              object.message = message[0];
 
-            Subscriber.count({})
-            .then((subscriberCount) => {
-              object.subscriberCount = subscriberCount;
+              Subscriber.count({})
+                .then((subscriberCount) => {
+                  object.subscriberCount = subscriberCount;
 
-              Mail.count({})
-              .then((messageCount) => {
-                object.messageCount = messageCount;
+                  Mail.count({})
+                    .then((messageCount) => {
+                      object.messageCount = messageCount;
 
-                res.render('admin/dashboard', {
-                  layout: 'admin',
-                  article: object.article,
-                  subscriberCount: object.subscriberCount,
-                  subscribers: object.subscribers,
-                  message: object.message,
-                  messageCount: object.messageCount
+                      res.render('admin/dashboard', {
+                        layout: 'admin',
+                        article: object.article,
+                        subscriberCount: object.subscriberCount,
+                        subscribers: object.subscribers,
+                        message: object.message,
+                        messageCount: object.messageCount
+                      });
+                    });
                 });
-              });
             });
-          });
         });
     }).catch((err) => {
       console.log(err);
@@ -130,6 +133,7 @@ router.get('/articles/:id', ensureAuthenticated, (req, res) => {
 
 router.post('/articles', ensureAuthenticated, (req, res) => {
   var article = {
+    _id: new ObjectId(),
     title: req.body.title,
     description: req.body.description,
     img: req.body.img,
@@ -142,6 +146,29 @@ router.post('/articles', ensureAuthenticated, (req, res) => {
         console.log(err);
         console.log('error occured');
       } else {
+        Subscriber.find({})
+          .then((subscribers) => {
+            subscribers.forEach((subscriber) => {
+              transporter.sendMail({
+                from: 'Team Technomaniac <bokaderohit1998@gmail.com>',
+                to: 'bokaderohit98@gmail.com',
+                subject: 'New Article',
+                template: 'article',
+                context: {
+                  article,
+                  subscriber
+                }
+              }, function(err, response) {
+                if (err) {
+                  console.log(err);
+                  return;
+                }
+                console.log(response);
+              });
+            });
+          }).catch((err) => {
+            console.log(err);
+          })
         req.flash('success_msg', 'Article is added');
         res.redirect('/admin/articles/');
       }
@@ -237,37 +264,58 @@ router.post('/interact', ensureAuthenticated, (req, res) => {
   var to = req.body.email;
   var subject = req.body.subject;
   var text = req.body.message;
-  var reciepients;
 
   if (to === 'bulk') {
     Subscriber.find({}, 'email -_id')
-      .then((objects) => {
-        var emails = objects.map((object) => object.email);
-        to = emails.join(', ');
-        mailOptions = {
-          from,
-          to,
-          subject,
-          text
-        };
-        mailIt(req, res, mailOptions);
+      .then((subscribers) => {
+        subscribers.forEach((subscriber) => {
+          transporter.sendMail({
+            from: 'Team Technomaniac <bokaderohit1998@gmail.com>',
+            to: 'bokaderohit98@gmail.com',
+            subject,
+            template: 'interact',
+            context: {
+              subscriber,
+              message: text,
+              subject,
+            }
+          }, function(err, response) {
+            if (err) {
+              console.log(err);
+              return;
+            }
+            console.log(response);
+            req.flash('success_msg', 'Mail sent successfully');
+          });
+        });
       }).catch((err) => {
         console.log(err);
       });
+      res.redirect('/admin/');
   } else {
     Mail.findById(to, 'email -_id')
-    .then((email) => {
-      to = email;
-      mailOptions = {
-        from,
-        to,
-        subject,
-        text
-      };
-      mailIt(req, res, mailOptions);
-    }).catch((err) => {
-      console.log(err);
-    });
+      .then((email) => {
+        to = email;
+        transporter.sendMail({
+          from: 'Team Technomaniac <bokaderohit1998@gmail.com>',
+          to,
+          subject,
+          template: 'interact',
+          context: {
+            subject,
+            message: text,
+          }
+        }, function(err, response) {
+          if (err) {
+            return;
+          }
+          console.log(response);
+          req.flash('success_msg', 'Mail sent successfully');
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+      res.redirect('/admin/');
   }
 });
 

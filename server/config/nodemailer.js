@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
+const hbs = require('nodemailer-express-handlebars');
 
 //transporter configuration
 const transporter = nodemailer.createTransport(smtpTransport({
@@ -12,6 +13,17 @@ const transporter = nodemailer.createTransport(smtpTransport({
     user: process.env.EMAIL,
     pass: process.env.PASSWORD
   }
+}));
+
+transporter.use('compile', hbs({
+  viewEngine: {
+    extname: '.handlebars',
+    layoutsDir: 'views/email/',
+    defaultLayout: 'template',
+    partialsDir: 'views/email/partials/'
+  },
+  viewPath: 'views/email/body',
+  extName: '.handlebars'
 }));
 
 //veryfying transporter
