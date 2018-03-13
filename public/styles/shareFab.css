@@ -47,28 +47,28 @@
 .buttons:nth-last-child(1) {
   -webkit-transition-delay: 25ms;
   transition-delay: 25ms;
-  background-image: url('/img/share.svg');
+  background-image: url('https://image.ibb.co/dzMcNx/share.png');
   background-size: contain;
 }
 
 .buttons:not(:last-child):nth-last-child(2) {
   -webkit-transition-delay: 50ms;
   transition-delay: 20ms;
-  background-image: url('/img/facebook.svg');
+  background-image: url('https://image.ibb.co/fhw2Nx/facebook.png');
   background-size: contain;
 }
 
 .buttons:not(:last-child):nth-last-child(3) {
   -webkit-transition-delay: 75ms;
   transition-delay: 40ms;
-  background-image: url('/img/twitter.svg');
+  background-image: url('https://image.ibb.co/dzOGhx/twitter.png');
   background-size: contain;
 }
 
 .buttons:not(:last-child):nth-last-child(4) {
   -webkit-transition-delay: 100ms;
   transition-delay: 60ms;
-  background-image: url('/img/google.svg');
+  background-image: url('https://image.ibb.co/m1nWFH/google_plus.png');
   background-size: contain;
 }
 
