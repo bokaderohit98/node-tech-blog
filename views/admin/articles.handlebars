@@ -1,3 +1,4 @@
+{{> _addArticleFab}}
 <section class="section--center mdl-grid site-max-width">
   {{#each articles}}
     <div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card clickable">
@@ -16,7 +17,7 @@
           <nav class="card-fab-container">
             <button class="card-buttons" value="DELETE"><img src="https://image.ibb.co/nOMDUc/delete.png"></button>
             <a href="/admin/articles/edit/{{id}}" class="card-buttons"><img src="https://image.ibb.co/i8x92x/edit.png"></a>
-            <a href="/admin/articles/{{id}}" class="card-buttons"><img src="/https://image.ibb.co/dSAwhx/see.png"></a>
+            <a href="/admin/articles/{{id}}" class="card-buttons"><img src="https://image.ibb.co/dSAwhx/see.png"></a>
             <a class="card-buttons" href="#"><img src="https://image.ibb.co/hRaU2x/menu.png"></a>
           </nav>
         </form>
