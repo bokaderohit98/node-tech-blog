@@ -271,7 +271,7 @@ router.post('/interact', ensureAuthenticated, (req, res) => {
         subscribers.forEach((subscriber) => {
           transporter.sendMail({
             from: 'Team Technomaniac <bokaderohit1998@gmail.com>',
-            to: 'bokaderohit98@gmail.com',
+            to: subscriber.email,
             subject,
             template: 'interact',
             context: {
