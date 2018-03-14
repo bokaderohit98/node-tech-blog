@@ -266,7 +266,7 @@ router.post('/interact', ensureAuthenticated, (req, res) => {
   var text = req.body.message;
 
   if (to === 'bulk') {
-    Subscriber.find({}, 'email -_id')
+    Subscriber.find({})
       .then((subscribers) => {
         subscribers.forEach((subscriber) => {
           transporter.sendMail({

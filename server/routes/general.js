@@ -134,4 +134,20 @@ router.post('/subscribe', (req, res) => {
   });
 });
 
+router.get('/unsubscribe/:id', (req, res) => {
+  Subscriber.findByIdAndRemove(req.params.id)
+  .then((subscriber) => {
+    res.redirect('/unsubscribed');
+  }).catch(err => {
+    console.log(err);
+    req.flash('error_msg', 'Some error occured');
+    res.redirect('/');
+  });
+});
+
+router.get('/unsubscribed/', (req, res) => {
+  res.render('general/unsubscribe');
+});
+
+
 module.exports = router;
