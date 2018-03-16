@@ -149,9 +149,10 @@ router.post('/articles', ensureAuthenticated, (req, res) => {
         Subscriber.find({})
           .then((subscribers) => {
             subscribers.forEach((subscriber) => {
+              var from = `Team Technomaniac <${process.env.EMAIL}>`;
               transporter.sendMail({
-                from: 'Team Technomaniac <bokaderohit1998@gmail.com>',
-                to: 'bokaderohit98@gmail.com',
+                from,
+                to: 'subscriber.email',
                 subject: 'New Article',
                 template: 'article',
                 context: {
@@ -259,7 +260,6 @@ router.get('/interact/:id', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/interact', ensureAuthenticated, (req, res) => {
-  var mailOptions;
   var from = `Team Technomaniac <${process.env.EMAIL}>`;
   var to = req.body.email;
   var subject = req.body.subject;
@@ -270,7 +270,7 @@ router.post('/interact', ensureAuthenticated, (req, res) => {
       .then((subscribers) => {
         subscribers.forEach((subscriber) => {
           transporter.sendMail({
-            from: 'Team Technomaniac <bokaderohit1998@gmail.com>',
+            from,
             to: subscriber.email,
             subject,
             template: 'interact',
@@ -297,7 +297,7 @@ router.post('/interact', ensureAuthenticated, (req, res) => {
       .then((email) => {
         to = email;
         transporter.sendMail({
-          from: 'Team Technomaniac <bokaderohit1998@gmail.com>',
+          from,
           to,
           subject,
           template: 'interact',
