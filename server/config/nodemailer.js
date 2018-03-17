@@ -3,17 +3,17 @@ const smtpTransport = require('nodemailer-smtp-transport');
 const hbs = require('nodemailer-express-handlebars');
 
 //transporter configuration
-const transporter = nodemailer.createTransport(smtpTransport({
-  from: process.env.EMAIL,
-  service: 'gmail',
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
+const transporter = nodemailer.createTransport({
+  service: "Gmail",
   auth: {
+    type: "OAuth2",
     user: process.env.EMAIL,
-    pass: process.env.PASSWORD
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    refreshToken: process.env.REFRESH_TOKEN,
+    accessToken: process.env.ACCESS_TOKEN
   }
-}));
+});
 
 transporter.use('compile', hbs({
   viewEngine: {
