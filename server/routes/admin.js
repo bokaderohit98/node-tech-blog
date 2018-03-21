@@ -152,7 +152,7 @@ router.post('/articles', ensureAuthenticated, (req, res) => {
               var from = `Team Technomaniac <${process.env.EMAIL}>`;
               transporter.sendMail({
                 from,
-                to: 'subscriber.email',
+                to: subscriber.email,
                 subject: 'New Article',
                 template: 'article',
                 context: {
